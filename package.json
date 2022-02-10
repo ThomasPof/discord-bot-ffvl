@@ -1,0 +1,25 @@
+{
+  "name": "discord-bot-zeleph",
+  "version": "1.0.0",
+  "description": "discord-bot-zeleph",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasPof/discord-bot-zeleph.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThomasPof/discord-bot-zeleph/issues"
+  },
+  "homepage": "https://github.com/ThomasPof/discord-bot-zeleph#readme",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "discord.js": "^13.6.0",
+    "glob": "^7.2.0"
+  }
+}
