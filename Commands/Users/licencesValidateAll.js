@@ -35,7 +35,7 @@ module.exports = {
       Response.setDescription(`
         Toutes les licences vont être validées pour cette année
         `)
-      console.log('length',guild.members.cache.size)
+
       guild.members.cache.forEach((member) => {
         member.roles.add(yearlyRole)
       })
