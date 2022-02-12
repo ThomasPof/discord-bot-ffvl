@@ -42,49 +42,61 @@ module.exports = {
     const zelephRole = guild.roles.cache.find(role => role.id == '934836576712814613')
     const member = guild.members.cache.find(member => member.id == interaction.user.id)
 
-    //si on trouve la licence dans la liste
-    if(Licences.includes(Licence)) {
-      // On ajoute les rôles de cette année
-      member.roles.add(zelephRole)
-      member.roles.add(yearlyRole)
-      // on envoi le message
+
+    //si le membre a déjà sa licence valide pour l'année
+    if(member.roles.cache.some(role => role.name == 'Licencié '+year)) {
       Response.setColor("GREEN")
-      // on supprime le rôle de l'an dernier
-      if(member.roles.cache.some(role => role.name == 'Licencié '+(year - 1))) {
-        member.roles.remove(pastYearlyRole)
-        Response.setDescription(`
-          🐘 Ta licence ${year} a été validée !
+      Response.setDescription(`
+        🐘 Ta licence ${year} est déjà validée, tout est bon pour cette année.
 
-          Content de te retrouver aux Z\'éléph encore cette année !
-          `
-          )
-      } else {
-        // Si nouveau membre, message de bienvenue
-        Response.setDescription(`
-          🐘 Bienvenue aux Z\'éléph !
-
-          Ta licence ${year} a été validée, tu as maintenant accès aux salons réservés aux membres du club.
-          `
-          )
-      }
+        Bon vols !
+        `
+        )
     } else {
-      Response.setColor("RED")
-      if(member.roles.cache.some(role => role.name == 'Licencié '+year - 1)) {
-        Response.setDescription(
-          `😱 On dirait que ta licence n'est pas dans la liste de ${year}.
+      //si on trouve la licence dans la liste
+      if(Licences.includes(Licence)) {
+        // On ajoute les rôles de cette année
+        member.roles.add(zelephRole)
+        member.roles.add(yearlyRole)
+        // on envoi le message
+        Response.setColor("GREEN")
+        // on supprime le rôle de l'an dernier
+        if(member.roles.cache.some(role => role.name == 'Licencié '+(year - 1))) {
+          member.roles.remove(pastYearlyRole)
+          Response.setDescription(`
+            🐘 Ta licence ${year} a été validée !
 
-            Pas de panique, tu conserves tes accès Discord pour le moment.
+            Content de te retrouver aux Z\'éléph encore cette année !
+            `
+            )
+        } else {
+          // Si nouveau membre, message de bienvenue
+          Response.setDescription(`
+            🐘 Bienvenue aux Z\'éléph !
 
-            Rapproche toi rapidement d'un des membres du comité pour régler ça et ne pas perdre tes accès aux salons Discord.
-          `)
+            Ta licence ${year} a été validée, tu as maintenant accès aux salons réservés aux membres du club.
+            `
+            )
+        }
       } else {
-        Response.setDescription(
-          `😱 Cette licence n\'est pas connue des Z\'éléph!
+        Response.setColor("RED")
+        if(member.roles.cache.some(role => role.name == 'Licencié '+year - 1)) {
+          Response.setDescription(
+            `😱 On dirait que ta licence n'est pas dans la liste de ${year}.
 
-          Mais pas de panique, rapproche toi d'un membre du comité pour que ton inscription soit prise en compte.
+              Pas de panique, tu conserves tes accès Discord pour le moment.
 
-          En attendant, tu as quand même accès aux salons de base.
-          `)
+              Rapproche toi rapidement d'un des membres du comité pour régler ça et ne pas perdre tes accès aux salons Discord.
+            `)
+        } else {
+          Response.setDescription(
+            `😱 Cette licence n\'est pas connue des Z\'éléph!
+
+            Mais pas de panique, rapproche toi d'un membre du comité pour que ton inscription soit prise en compte.
+
+            En attendant, tu as quand même accès aux salons de base.
+            `)
+        }
       }
     }
     interaction.reply({embeds: [Response], ephemeral: true})
