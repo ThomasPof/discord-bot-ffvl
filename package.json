@@ -21,5 +21,8 @@
     "ascii-table": "^0.0.9",
     "discord.js": "^13.6.0",
     "glob": "^7.2.0"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
