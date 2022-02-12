@@ -1,8 +1,8 @@
-const { CommandInteraction, MessageEmbed, CommandInteractionOptionResolver } = require("discord.js")
+const { CommandInteraction, MessageEmbed } = require("discord.js")
 
 module.exports = {
   name: "licences_clean_all",
-  description: 'Suppression du rôle "Membre Zéléph" pour tous les membres n\'ayant pas renouvelé leur licence',
+  description: 'ATTENTION : Suppression du rôle "Membre Zéléph" pour TOUS les membres n\'ayant pas renouvelé leur licence',
   permission: "ADMINISTRATOR",
   /**
    *

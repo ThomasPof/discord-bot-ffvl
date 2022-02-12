@@ -40,6 +40,7 @@ module.exports = {
     const pastYearlyRole = guild.roles.cache.find(role => role.name == 'Licencié '+(year - 1))
 
     const zelephRole = guild.roles.cache.find(role => role.id == '934836576712814613')
+    const newMemberRole = guild.roles.cache.find(role => role.id == '942124799361171476')
     const member = guild.members.cache.find(member => member.id == interaction.user.id)
 
 
@@ -58,6 +59,7 @@ module.exports = {
         // On ajoute les rôles de cette année
         member.roles.add(zelephRole)
         member.roles.add(yearlyRole)
+        member.roles.remove(newMemberRole)
         // on envoi le message
         Response.setColor("GREEN")
         // on supprime le rôle de l'an dernier
