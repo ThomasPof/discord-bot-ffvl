@@ -8,6 +8,5 @@ module.exports = {
    */
   execute(client) {
     console.log("The client is now ready!")
-    client.user.setActivity("Hello", {type: "WATCHING"})
   }
 }

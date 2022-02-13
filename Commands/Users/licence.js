@@ -53,6 +53,7 @@ module.exports = {
         Bon vols !
         `
         )
+      console.log(`${member.user.username } : licence déjà valide`);
     } else {
       //si on trouve la licence dans la liste
       if(Licences.includes(Licence)) {
@@ -71,6 +72,7 @@ module.exports = {
             Content de te retrouver aux Z\'éléph encore cette année !
             `
             )
+            console.log(`${member.user.username } : licence ${Licence} re-validée pour ${year}`);
         } else {
           // Si nouveau membre, message de bienvenue
           Response.setDescription(`
@@ -79,6 +81,7 @@ module.exports = {
             Ta licence ${year} a été validée, tu as maintenant accès aux salons réservés aux membres du club.
             `
             )
+          console.log(`${member.user.username } : nouvelle licence ${Licence} validée pour ${year}`);
         }
       } else {
         Response.setColor("RED")
@@ -90,6 +93,7 @@ module.exports = {
 
               Rapproche toi rapidement d'un des membres du comité pour régler ça et ne pas perdre tes accès aux salons Discord.
             `)
+          console.log(`${member.user.username } : licence ${Licence} invalide pour ${year}`);
         } else {
           Response.setDescription(
             `😱 Cette licence n\'est pas connue des Z\'éléph!
@@ -98,6 +102,7 @@ module.exports = {
 
             En attendant, tu as quand même accès aux salons de base.
             `)
+          console.log(`${member.user.username } : nouvelle licence ${Licence} non reconnue`);
         }
       }
     }
