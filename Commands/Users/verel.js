@@ -28,6 +28,7 @@ module.exports = {
       Response.addField('\u200B',response.data.meta.name, false)
       Response.addFields(
         { name: 'Direction', value: degToCompass(response.data.measurements.wind_heading), inline: true  },
+        { name: 'Vent mini', value: String(response.data.measurements.wind_speed_min) + ' km/h', inline: true },
         { name: 'Vent moyen', value: String(response.data.measurements.wind_speed_avg) +  'km/h', inline: true },
         { name: 'Rafales', value: String(response.data.measurements.wind_speed_max) + ' km/h', inline: true },
       )
@@ -38,6 +39,7 @@ module.exports = {
       Response.addField('\u200B',response.data.meta.name, false)
       Response.addFields(
         { name: 'Direction', value: degToCompass(response.data.measurements.wind_heading), inline: true  },
+        { name: 'Vent mini', value: String(response.data.measurements.wind_speed_min) + ' km/h', inline: true },
         { name: 'Vent moyen', value: String(response.data.measurements.wind_speed_avg) + ' km/h', inline: true },
         { name: 'Rafales', value: String(response.data.measurements.wind_speed_max) + ' km/h', inline: true },
       )
@@ -48,6 +50,7 @@ module.exports = {
       Response.addField('\u200B',response.data.meta.name, false)
       Response.addFields(
         { name: 'Direction', value: degToCompass(response.data.measurements.wind_heading), inline: true  },
+        { name: 'Vent mini', value: String(response.data.measurements.wind_speed_min) + ' km/h', inline: true },
         { name: 'Vent moyen', value: String(response.data.measurements.wind_speed_avg) + ' km/h', inline: true },
         { name: 'Rafales', value: String(response.data.measurements.wind_speed_max) + ' km/h', inline: true },
       )

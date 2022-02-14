@@ -36,5 +36,6 @@ Il est nécessaire de créer un fichier config.json à la racine, ayant cette fo
 - `/licences_clean_all` : lancée par un admin. Supprime les rôles "Licencié 2021" (année précédente) et `mainRoleId` aux personnes n'ayant pas le rôle "Licencié 2022" (année en cours)
 - `/licence_validate_all` : lancée par un admin. Commande de test. Permet de donner à tous le rôle "Licencié 2022" (année en cours)
 - `/emitadd`: permet de tester le message de bienvenue (trigger l'ajout d'un nouveau membre Discord)
+- `/verel`: permet de générer un rapide aperçu des balises utiles autour de Verel + la dernière image webcam
 
 
