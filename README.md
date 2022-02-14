@@ -2,6 +2,12 @@
 
 Ce bot est conçu pour intéragir de manière automatique via certaines commandes avec les utilisateurs. Il permet notamment de valider les licences des membres afin de vérifier qu'ils sont bien membre du club.
 
+## Installation
+
+Node.js 16.9.0 or newer is required.
+`npm i`
+Run the app with `node .`
+
 ## Prérequis
 
 Il est nécessaire de créer un fichier config.json à la racine, ayant cette forme :
