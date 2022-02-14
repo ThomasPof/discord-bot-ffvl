@@ -5,8 +5,10 @@ Ce bot est conçu pour intéragir de manière automatique via certaines commande
 ## Installation
 
 Node.js 16.9.0 or newer is required.
-`npm i`
-Run the app with `node .`
+
+Install the app : `npm i`
+
+Run the app : `node .`
 
 ## Prérequis
 
