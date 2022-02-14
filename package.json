@@ -21,7 +21,8 @@
   "dependencies": {
     "ascii-table": "^0.0.9",
     "discord.js": "^13.6.0",
-    "glob": "^7.2.0"
+    "glob": "^7.2.0",
+    "node-fetch": "^2.6.7"
   },
   "engines": {
     "node": "16.x",
