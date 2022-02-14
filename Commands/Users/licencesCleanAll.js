@@ -1,8 +1,9 @@
 const { CommandInteraction, MessageEmbed } = require("discord.js")
+const { mainRoleId } = require('../../config.json')
 
 module.exports = {
   name: "licences_clean_all",
-  description: 'ATTENTION : Suppression du rôle "Membre Zéléph" pour TOUS les membres n\'ayant pas renouvelé leur licence',
+  description: '⚠️ Suppression du rôle "Membre Zéléph" pour TOUS les membres n\'ayant pas renouvelé leur licence',
   permission: "ADMINISTRATOR",
   /**
    *
@@ -16,7 +17,7 @@ module.exports = {
     const d = new Date();
     const year = d.getFullYear();
 
-    const zelephRole = guild.roles.cache.find(role => role.id == '934836576712814613')
+    const mainRole = guild.roles.cache.find(role => role.id == mainRoleId)
 
     Response.setColor("RED")
     Response.setDescription(`
@@ -24,7 +25,7 @@ module.exports = {
       `)
     guild.members.cache.forEach((member) => {
       if(!member.roles.cache.some(role => role.name == 'Licencié '+year)) {
-        // member.roles.remove(zelephRole)
+        // member.roles.remove(mainRole)
         console.log('on retire le rôle');
       }
     })

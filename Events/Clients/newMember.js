@@ -1,4 +1,5 @@
 const { Client, MessageEmbed } = require("discord.js")
+const { newMemberRoleId, welcomeChannelId } = require('../../config.json')
 
 module.exports = {
   name: 'guildMemberAdd',
@@ -7,7 +8,7 @@ module.exports = {
    * @param {Client} client
    */
   execute(member, client) {
-    const NewMemberRole = member.guild.roles.cache.get('942124799361171476')
+    const NewMemberRole = member.guild.roles.cache.get(newMemberRoleId)
     member.roles.add(NewMemberRole)
 
     const WelcomeMessage = new MessageEmbed()
@@ -31,7 +32,7 @@ module.exports = {
 
         Bonnes discussions, et surtout bons vols !
       `)
-      const welcomeChannel = member.guild.channels.cache.get('942124475334422609') // salon Bienvenue
+      const welcomeChannel = member.guild.channels.cache.get(welcomeChannelId) // salon Bienvenue
       welcomeChannel.send({embeds: [WelcomeMessage], ephemeral: true})
 
       // client.users.fetch(message.author.id, false).then((user) => {

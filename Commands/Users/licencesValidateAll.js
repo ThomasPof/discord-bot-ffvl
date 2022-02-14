@@ -2,7 +2,7 @@ const { CommandInteraction, MessageEmbed } = require("discord.js")
 
 module.exports = {
   name: "licences_validate_all",
-  description: 'ATTENTION : Ajout du rôle de cette année pour TOUS les membres',
+  description: '⚠️ Ajout du rôle de cette année pour TOUS les membres',
   permission: "ADMINISTRATOR",
   /**
    *
