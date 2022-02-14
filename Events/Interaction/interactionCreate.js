@@ -14,7 +14,7 @@ module.exports= {
         new MessageEmbed()
           .setColor("RED")
           .setDescription("An error occured while running this command.")
-      ]}) && client.commands.delete(interaction.commandName)
+      ],ephemeral: true}) && client.commands.delete(interaction.commandName)
 
       command.execute(interaction, client)
     }
