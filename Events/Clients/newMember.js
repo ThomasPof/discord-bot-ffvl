@@ -18,9 +18,9 @@ module.exports = {
 
         Ce discord est là pour nous permettre d'échanger des infos, de planifier des sorties et événements, de finaliser leurs organisations opérationnelles, et d'en faire le compte-rendu.
 
-        Afin de facilité l'organisation et la lisibilité, **il est souhaité que les pseudo affichés sur discord soient les vrais prénoms et la première lettre du nom (au moins)**. Cela peut être paramètre pour le serveur des z'éléphants volants dans votre profil serveur.
+        Afin de faciliter l'organisation et la lisibilité, **il est souhaité que les pseudo affichés sur discord soient les vrais prénoms et la première lettre du nom (au moins)**. Cela peut être paramètré pour le serveur des z'éléphants volants dans votre profil serveur.
 
-        Si tu n'êtes pas membre du club des Z'éléphants Volants, ton accès au serveur est limité à quelques salons. **Pour avoir un accès complet au serveur, tu dois faire valider ta licence FFVL à notre robot.** Il suffit de taper le message **/licence** dans un salon et de renseigner ton numéro de licence FFVL.
+        Si tu n'es pas membre du club des Z'éléphants Volants, ton accès au serveur est limité à quelques salons. **Pour avoir un accès complet au serveur, tu dois faire valider ta licence FFVL à notre robot.** Il suffit de taper le message **/licence** dans un salon et de renseigner ton numéro de licence FFVL.
 
         Tu es nouveau au club  ? Alors n'hésite pas à aller te présenter dans le salon <#935798608396185641>.
         Tu veux organiser une montée à Vérel ? Rendez-vous dans <#935238034918621264>.
