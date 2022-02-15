@@ -17,7 +17,9 @@ module.exports= {
           .setDescription("An error occured while running this command.")
       ],ephemeral: true}) && client.commands.delete(interaction.commandName)
 
-      console.log(interaction)
+      // console.log(interaction)
+      // console.log('INTERACTION : ' + interaction.channelId);
+      // 941229178714488842
       if(command.deferred) {
         await interaction.deferReply();
       }
