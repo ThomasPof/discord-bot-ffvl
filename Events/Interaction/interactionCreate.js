@@ -47,7 +47,7 @@ module.exports= {
 
       setTimeout(() => time_stamps.delete(interaction.channelId), cooldown_amount)
       if(command.deferred) {
-        await interaction.deferReply();
+        await interaction.deferReply({ephemeral: command.ephemeral});
       }
       command.execute(interaction, client)
     }

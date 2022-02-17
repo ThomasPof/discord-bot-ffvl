@@ -9,6 +9,7 @@ module.exports = {
   name: "licence",
   description: "Vérification du numéro de licence FFVL",
   deferred: true,
+  ephemeral: true,
   options: [
     {
       name: "licence",
@@ -58,7 +59,7 @@ module.exports = {
         `
         )
       console.log(`${member.user.username } : licence déjà valide`);
-      interaction.editReply({embeds: [Response], ephemeral: true})
+      interaction.editReply({embeds: [Response]})
     } else {
       fetch(`https://data.ffvl.fr/php/verif_lic2.php?num=${Licence}&stru=${structureId}`)
         .then(response => response.json())
@@ -115,7 +116,7 @@ module.exports = {
               console.log(`${member.user.username } : nouvelle licence ${Licence} non reconnue`);
             }
           }
-          interaction.editReply({embeds: [Response], ephemeral: true})
+          interaction.editReply({embeds: [Response]})
         })
     }
   }
