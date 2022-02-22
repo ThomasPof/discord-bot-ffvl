@@ -3,5 +3,6 @@
   "mainRoleId": "l'ID du rôle 'membre du club' du serveur",
   "newMemberRoleId": "un ID de rôle donné aux nouveaux membres n'ayant pas validé leur licence",
   "welcomeChannelId": "ID du salon de bienvenue",
-	"structureId": "Numéro de structure FFVL"
+	"structureId": "Numéro de structure FFVL",
+  "licences": "array de licences FFVL"
 }

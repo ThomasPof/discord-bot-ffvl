@@ -1,5 +1,4 @@
-const { Licences } = require("../../Validation/Licences.js")
-const { mainRoleId, newMemberRoleId, structureId } = require('../../config.json')
+const { mainRoleId, newMemberRoleId, structureId, licences } = require('../../config.json')
 
 const fetch = require('node-fetch');
 
@@ -48,6 +47,7 @@ module.exports = {
     const newMemberRole = guild.roles.cache.find(role => role.id == newMemberRoleId)
     const member = guild.members.cache.find(member => member.id == interaction.user.id)
 
+    console.log('on check la licence : ', licences.includes(Licence));
 
     //si le membre a déjà sa licence valide pour l'année
     if(member.roles.cache.some(role => role.name == 'Licencié '+year)) {
@@ -66,7 +66,7 @@ module.exports = {
         .then((response) => {
           console.log('réponse FFVL', response);
           //si on trouve la licence dans la liste
-          if(response == 1 || Licences.includes(Licence)) {
+          if(response == 1 || licences.includes(Licence)) {
             https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
             // On ajoute les rôles de cette année
             member.roles.add(mainRole)
