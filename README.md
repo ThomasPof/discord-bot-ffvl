@@ -2,6 +2,13 @@
 
 Ce bot est conçu pour intéragir de manière automatique via certaines commandes avec les utilisateurs. Il permet notamment de valider les licences des membres afin de vérifier qu'ils sont bien membre du club.
 
+## ToDo
+
+- dev la commande `/pioupiou` qui permet de toggle le rôle pioupiou pour identifier les débutants (ou plutôt qu'un rôle, ajouter un picto dans leur nom...?)
+- dev la commande `/biplace` (idem pioupiou mais pour les biplaceurs)
+- trouver un moyen de faire une commande `/position` qui permet de partager sa géoloc (pour les récup)
+- voir avec la FFVL pour que la route `https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359` vérifie dans tous les clubs du licencié, et pas juste le club pris avec la licence (en cours)
+
 ## Installation
 
 Node.js 16.9.0 or newer is required.
@@ -19,8 +26,9 @@ Il est nécessaire de créer un fichier config.json à la racine, ayant cette fo
   "Token": "le token du bot Discord",
   "mainRoleId": "l'ID du rôle 'membre du club' du serveur",
   "newMemberRoleId": "un ID de rôle donné aux nouveaux membres n'ayant pas validé leur licence",
-  "welcomeChannelId": "ID du salon de bienvenue"
-  "structureId": "Structure de la licence FFVL"
+  "welcomeChannelId": "ID du salon de bienvenue",
+  "structureId": "Numéro de structure de la licence FFVL",
+  "licences": "array de licences FFVL"
 }
 ```
 
