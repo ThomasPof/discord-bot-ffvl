@@ -4,10 +4,13 @@ Ce bot est conçu pour intéragir de manière automatique via certaines commande
 
 ## ToDo
 
-- dev la commande `/pioupiou` qui permet de toggle le rôle pioupiou pour identifier les débutants (ou plutôt qu'un rôle, ajouter un picto dans leur nom...?)
-- dev la commande `/biplace` (idem pioupiou mais pour les biplaceurs)
+- dev une commande qui clean le channel "sortie spontannées", en ne gardant que les X dernières semaines
 - trouver un moyen de faire une commande `/position` qui permet de partager sa géoloc (pour les récup)
 - voir avec la FFVL pour que la route `https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359` vérifie dans tous les clubs du licencié, et pas juste le club pris avec la licence (en cours)
+
+Abandonnés :
+- dev la commande `/pioupiou` qui permet de toggle le rôle pioupiou pour identifier les débutants (ou plutôt qu'un rôle, ajouter un picto dans leur nom...?)
+- dev la commande `/biplace` (idem pioupiou mais pour les biplaceurs)
 
 ## Installation
 
