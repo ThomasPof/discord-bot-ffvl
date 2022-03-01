@@ -27,6 +27,7 @@ Il est nécessaire de créer un fichier config.json à la racine, ayant cette fo
 ```
 {
   "Token": "le token du bot Discord",
+  "serverId" : "ID du serveur",
   "mainRoleId": "l'ID du rôle 'membre du club' du serveur",
   "newMemberRoleId": "un ID de rôle donné aux nouveaux membres n'ayant pas validé leur licence",
   "welcomeChannelId": "ID du salon de bienvenue",
