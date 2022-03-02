@@ -1,4 +1,5 @@
 const { mainRoleId, newMemberRoleId, structureId, licences } = require('../../config.json')
+const { TRANSLATION_LICENCE } = require('../../translation/messages.js')
 
 const fetch = require('node-fetch');
 
@@ -12,7 +13,7 @@ module.exports = {
   options: [
     {
       name: "licence",
-      description: "Renseignez votre numéro de licence FFVL pour rejoindre le discord des Z'éléph",
+      description: TRANSLATION_LICENCE.commandDescription(),
       type: "STRING",
       required: true,
     }
@@ -52,12 +53,7 @@ module.exports = {
     //si le membre a déjà sa licence valide pour l'année
     if(member.roles.cache.some(role => role.name == 'Licencié '+year)) {
       Response.setColor("GREEN")
-      Response.setDescription(`
-        🐘 Ta licence ${year} est déjà validée, tout est bon pour cette année.
-
-        Bon vols !
-        `
-        )
+      Response.setDescription(TRANSLATION_LICENCE.alreadyValidDescription(year))
       console.log(`${member.user.username } : licence déjà valide`);
       interaction.editReply({embeds: [Response]})
     } else {
@@ -77,21 +73,11 @@ module.exports = {
             // on supprime le rôle de l'an dernier
             if(member.roles.cache.some(role => role.name == 'Licencié '+(year - 1))) {
               member.roles.remove(pastYearlyRole)
-              Response.setDescription(`
-                🐘 Ta licence ${year} a été validée !
-
-                Content de te retrouver aux Z\'éléph encore cette année !
-                `
-                )
+              Response.setDescription(TRANSLATION_LICENCE.successRenewMessage(year))
                 console.log(`${member.user.username } : licence ${Licence} re-validée pour ${year}`);
             } else {
               // Si nouveau membre, message de bienvenue
-              Response.setDescription(`
-                🐘 Bienvenue aux Z\'éléph !
-
-                Ta licence ${year} a été validée, tu as maintenant accès aux salons réservés aux membres du club.
-                `
-                )
+              Response.setDescription(TRANSLATION_LICENCE.successNewMessage(year))
               console.log(`${member.user.username } : nouvelle licence ${Licence} validée pour ${year}`);
             }
           } else {
@@ -106,13 +92,7 @@ module.exports = {
                 `)
               console.log(`${member.user.username } : licence ${Licence} invalide pour ${year}`);
             } else {
-              Response.setDescription(
-                `😱 Cette licence n\'est pas connue des Z\'éléph!
-
-                Mais pas de panique, rapproche toi d'un membre du comité pour que ton inscription soit prise en compte.
-
-                En attendant, tu as quand même accès aux salons de base.
-                `)
+              Response.setDescription(TRANSLATION_LICENCE.failureClub())
               console.log(`${member.user.username } : nouvelle licence ${Licence} non reconnue`);
             }
           }
