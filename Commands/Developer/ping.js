@@ -5,7 +5,6 @@ module.exports = {
   description: "Ping",
   permission: "ADMINISTRATOR",
   /**
-   *
    * @param {CommandInteraction} interaction
    */
   execute(interaction) {

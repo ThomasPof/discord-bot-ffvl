@@ -7,7 +7,7 @@ const { CommandInteraction, MessageEmbed } = require("discord.js")
 
 module.exports = {
   name: "licence",
-  description: "Vérification du numéro de licence FFVL",
+  description: TRANSLATION_LICENCE.description(),
   deferred: true,
   ephemeral: true,
   options: [
@@ -83,13 +83,7 @@ module.exports = {
           } else {
             Response.setColor("RED")
             if(member.roles.cache.some(role => role.name == 'Licencié '+year - 1)) {
-              Response.setDescription(
-                `😱 On dirait que ta licence n'est pas dans la liste de ${year}.
-
-                  Pas de panique, tu conserves tes accès Discord pour le moment.
-
-                  Rapproche toi rapidement d'un des membres du comité pour régler ça et ne pas perdre tes accès aux salons Discord.
-                `)
+              Response.setDescription(TRANSLATION_LICENCE.failureList(year))
               console.log(`${member.user.username } : licence ${Licence} invalide pour ${year}`);
             } else {
               Response.setDescription(TRANSLATION_LICENCE.failureClub())
