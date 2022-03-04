@@ -61,7 +61,7 @@ module.exports = {
       console.log(`${member.user.username } : licence déjà valide`);
       interaction.editReply({embeds: [Response]})
     } else {
-      fetch(`https://data.ffvl.fr/php/verif_lic2.php?num=${Licence}&stru=${structureId}`)
+      fetch(`https://data.ffvl.fr/php/verif_lic_adh.php?num=${Licence}&stru=${structureId}`)
         .then(response => response.json())
         .then((response) => {
           console.log('réponse FFVL', response);
