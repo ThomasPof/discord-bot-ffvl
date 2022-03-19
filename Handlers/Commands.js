@@ -21,7 +21,7 @@ module.exports = async (client) => {
     return Table.addRow(file.split("/")[7], "FAILED", "Missing a name.")
 
     if(!command.description)
-    return Table.addRow(file.split("/")[7], "FAILED", "Missing a nadescription.me")
+    return Table.addRow(file.split("/")[7], "FAILED", "Missing a description.")
 
     if(command.permission) {
       if(Perms.includes(command.permission))
