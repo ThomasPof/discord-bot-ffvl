@@ -22,6 +22,8 @@ Run the app : `node .`
 
 ## Prérequis
 
+
+### Configuration: 
 Il est nécessaire de créer un fichier config.json à la racine, ayant cette forme :
 
 ```
@@ -35,6 +37,11 @@ Il est nécessaire de créer un fichier config.json à la racine, ayant cette fo
   "licences": "array de licences FFVL"
 }
 ```
+
+### Traduction
+
+Les textes du bot sont définient dans le fichier `translation/messages.js`.
+Le script `preinstall`, executé automatiquement à l'installation de l'app va générer ce fichier sur la base du modèle `translation/messages.js`. 
 
 ## Fonctionnement
 

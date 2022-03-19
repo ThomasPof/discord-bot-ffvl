@@ -1,9 +1,10 @@
 const { CommandInteraction, MessageEmbed } = require("discord.js")
 const { mainRoleId } = require('../../config.json')
+const { TRANSLATION_LICENCE_CLEAN } = require('../../translation/messages.js')
 
 module.exports = {
   name: "licences_clean_all",
-  description: '⚠️ Suppression du rôle "Membre Zéléph" pour TOUS les membres n\'ayant pas renouvelé leur licence',
+  description: TRANSLATION_LICENCE_CLEAN.description(),
   permission: "ADMINISTRATOR",
   /**
    *
@@ -20,9 +21,7 @@ module.exports = {
     const mainRole = guild.roles.cache.find(role => role.id == mainRoleId)
 
     Response.setColor("RED")
-    Response.setDescription(`
-      Les membres n'ayant pas renouvelés leur licences vont voir leur rôle "Membre Z'éléph" retiré.
-      `)
+    Response.setDescription(TRANSLATION_LICENCE_CLEAN.successMessage())
     guild.members.cache.forEach((member) => {
       if(!member.roles.cache.some(role => role.name == 'Licencié '+year)) {
         // member.roles.remove(mainRole)
