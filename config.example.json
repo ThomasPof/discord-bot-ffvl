@@ -4,6 +4,13 @@
   "mainRoleId": "l'ID du rôle 'membre du club' du serveur",
   "newMemberRoleId": "un ID de rôle donné aux nouveaux membres n'ayant pas validé leur licence",
   "welcomeChannelId": "ID du salon de bienvenue",
-	"structureId": "Numéro de structure FFVL",
-  "licences": "array de licences FFVL"
+  "structureId": "Numéro de structure FFVL",
+  "licences": "array de licences FFVL",
+  "categoryRules": [
+    {
+      "categoryId": "Id de la category",
+      "pattern": "^\\d{2}-\\d{2}  -- exemple de regex pour valider le format de nommage",
+      "order": true
+    }
+  ]
 }
