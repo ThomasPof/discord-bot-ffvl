@@ -6,6 +6,7 @@ module.exports = {
   name: "verel",
   description: "Les infos utiles pour aller voler à Verel",
   deferred: true,
+  ephemeral: true,
   // cooldown in minutes
   cooldown: 10,
 
