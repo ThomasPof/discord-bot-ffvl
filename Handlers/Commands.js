@@ -31,4 +31,12 @@ module.exports = async (client) => {
   });
 
   console.log(Table.toString())
+
+  // PERMISSIONS CHECK //
+
+  client.on('ready', async () => {
+    const MainGuild = await client.guilds.cache.get(serverId)
+
+    MainGuild.commands.set(CommandsArray)
+  })
 }
