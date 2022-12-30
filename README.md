@@ -23,7 +23,7 @@ Run the app : `node .`
 ## Prérequis
 
 
-### Configuration: 
+### Configuration:
 Il est nécessaire de créer un fichier config.json à la racine, ayant cette forme :
 
 ```
@@ -32,7 +32,6 @@ Il est nécessaire de créer un fichier config.json à la racine, ayant cette fo
   "serverId" : "ID du serveur",
   "mainRoleId": "l'ID du rôle 'membre du club' du serveur",
   "newMemberRoleId": "un ID de rôle donné aux nouveaux membres n'ayant pas validé leur licence",
-  "welcomeChannelId": "ID du salon de bienvenue",
   "structureId": "Numéro de structure de la licence FFVL",
   "licences": "array de licences FFVL"
 }
@@ -41,7 +40,7 @@ Il est nécessaire de créer un fichier config.json à la racine, ayant cette fo
 ### Traduction
 
 Les textes du bot sont définient dans le fichier `translation/messages.js`.
-Le script `preinstall`, executé automatiquement à l'installation de l'app va générer ce fichier sur la base du modèle `translation/messages.js`. 
+Le script `preinstall`, executé automatiquement à l'installation de l'app va générer ce fichier sur la base du modèle `translation/messages.js`.
 
 ## Fonctionnement
 
