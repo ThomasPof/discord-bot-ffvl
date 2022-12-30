@@ -23,7 +23,8 @@ module.exports = {
     Response.setColor("RED")
     Response.setDescription(TRANSLATION_LICENCE_CLEAN.successMessage())
     guild.members.cache.forEach((member) => {
-      if(!member.roles.cache.some(role => role.name == 'Licencié '+year)) {
+      if(!member.roles.cache.some(role => role.name == 'Licencié '+year &&
+         !member.roles.cache.some(role => role.name == 'Licencié '+(year - 1))) {
         // member.roles.remove(mainRole)
         console.log('on retire le rôle');
       }

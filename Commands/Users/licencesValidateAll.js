@@ -3,12 +3,12 @@ const { CommandInteraction, MessageEmbed } = require("discord.js")
 module.exports = {
   name: "licences_validate_all",
   description: '⚠️ Ajout du rôle de cette année pour TOUS les membres',
-  permission: "ADMINISTRATOR",
   /**
    *
    * @param {CommandInteraction} interaction
    */
   execute(interaction, client) {
+    if(!interaction.member.permissions.has("ADMINISTRATOR")) return;
     const { guild } = interaction;
     const Response = new MessageEmbed()
 
@@ -37,7 +37,7 @@ module.exports = {
         `)
 
       guild.members.cache.forEach((member) => {
-        member.roles.add(yearlyRole)
+        // member.roles.add(yearlyRole)
       })
       interaction.reply({embeds: [Response], ephemeral: true})
     }
