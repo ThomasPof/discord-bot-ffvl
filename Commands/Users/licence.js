@@ -1,7 +1,7 @@
 const { mainRoleId, newMemberRoleId, structureId, licences } = require('../../config.json')
 const { TRANSLATION_LICENCE } = require('../../translation/messages.js')
 
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
 const { CommandInteraction, MessageEmbed } = require("discord.js")
 

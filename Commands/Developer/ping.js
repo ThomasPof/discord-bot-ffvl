@@ -1,13 +1,19 @@
-const { CommandInteraction } = require("discord.js")
+const { CommandInteraction, MessageEmbed } = require("discord.js")
+
 
 module.exports = {
   name: "ping",
   description: "Ping",
+  deferred: true,
+  ephemeral: true,
   /**
    * @param {CommandInteraction} interaction
    */
-  execute(interaction) {
+  execute(interaction, client) {
     if(!interaction.member.permissions.has("ADMINISTRATOR")) return;
-    interaction.reply({content: "PING BACK"})
+    const Response = new MessageEmbed()
+    Response.setColor("RED")
+    Response.setDescription("PING BACK")
+    interaction.editReply({embeds: [Response]})
   }
 }

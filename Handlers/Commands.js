@@ -23,13 +23,6 @@ module.exports = async (client) => {
     if(!command.description)
     return Table.addRow(file.split("/")[7], "FAILED", "Missing a description.")
 
-    if(command.permission) {
-      if(Perms.includes(command.permission))
-      command.defaultPermission = false
-      else
-      return Table.addRow(command.name, "Failed", "Permission is invalid")
-    }
-
     client.commands.set(command.name, command)
     CommandsArray.push(command)
 
