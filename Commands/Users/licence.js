@@ -63,7 +63,7 @@ module.exports = {
           console.log('réponse FFVL', response);
           //si on trouve la licence dans la liste
           if(response == 1 || licences.includes(Licence)) {
-            https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
+            // https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
             // On ajoute les rôles de cette année
             member.roles.add(mainRole)
             member.roles.add(yearlyRole)

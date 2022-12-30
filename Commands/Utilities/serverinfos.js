@@ -9,6 +9,7 @@ module.exports= {
    * @param {CommandeInteraction} interaction
    */
   execute(interaction) {
+    if(!interaction.member.permissions.has("ADMINISTRATOR")) return;
     const { guild } = interaction;
 
     const { name, createdTimestamp, ownerId, description, members } = guild

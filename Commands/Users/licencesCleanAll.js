@@ -5,12 +5,12 @@ const { TRANSLATION_LICENCE_CLEAN } = require('../../translation/messages.js')
 module.exports = {
   name: "licences_clean_all",
   description: TRANSLATION_LICENCE_CLEAN.description(),
-  permission: "ADMINISTRATOR",
   /**
    *
    * @param {CommandInteraction} interaction
    */
   execute(interaction, client) {
+    if(!interaction.member.permissions.has("ADMINISTRATOR")) return;
     const { guild } = interaction;
     const Response = new MessageEmbed()
 
