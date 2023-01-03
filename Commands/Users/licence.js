@@ -1,7 +1,7 @@
 const { mainRoleId, newMemberRoleId, structureId, licences } = require('../../config.json')
 const { TRANSLATION_LICENCE } = require('../../translation/messages.js')
 
-// const fetch = require('node-fetch');
+const fetch = require('node-fetch');
 
 const { CommandInteraction, MessageEmbed } = require("discord.js")
 
@@ -57,41 +57,39 @@ module.exports = {
     // On check dans la liste si on le trouve
     for(const [year, licencesList] of Object.entries(licences)) {
       if(licencesList.includes(Licence)) {
-        member.roles.add(mainRole)
-        member.roles.remove(newMemberRole)
         member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+year))
         isValid = true;
       }
     }
 
-    // fetch(`https://data.ffvl.fr/php/verif_lic_adh.php?num=${Licence}&stru=${structureId}`)
-    //   .then(response => response.json())
-    //   .then((response) => {
-    //     console.log('réponse FFVL', response);
-    //     //si on trouve la licence dans la liste
-    //     if(response == 1) {
-    //       // https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
-    //       // On ajoute les rôles de cette année
-    //       member.roles.add(mainRole)
-    //       member.roles.add(yearlyRole)
-    //       member.roles.remove(newMemberRole)
-    //       // on envoi le message
-    //       Response.setColor("GREEN")
-    //       // Si nouveau membre, message de bienvenue
-    //       Response.setDescription(TRANSLATION_LICENCE.successNewMessage(year))
-    //       console.log(`${member.user.username } : nouvelle licence ${Licence} validée pour ${year}`);
-    //     }
-    //     interaction.editReply({embeds: [Response]})
-    //   })
+    fetch(`https://data.ffvl.fr/php/verif_lic_adh.php?num=${Licence}&stru=${structureId}`)
+      .then(response => response.json())
+      .then((response) => {
+        console.log('réponse FFVL', response);
+        //si on trouve la licence dans la liste
+        if(response == 1) {
+          // https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
+          isValid = true;
+          // On ajoute le rôle de cette année
+          member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+currentYear))
+          // on envoi le message
+          // Si nouveau membre, message de bienvenue
+          console.log(`${member.user.username } : nouvelle licence ${Licence} validée pour ${currentYear}`);
+        }
+      })
+      .then((response) => {
+        if(isValid) {
+          member.roles.add(mainRole)
+          member.roles.remove(newMemberRole)
+          Response.setColor("GREEN")
+          Response.setDescription(TRANSLATION_LICENCE.successNewMessage())
+        } else {
+          Response.setColor("RED")
+          Response.setDescription(TRANSLATION_LICENCE.failureClub())
+          console.log(d, 'echec licence', member.user.username, Licence)
+        }
+        interaction.editReply({embeds: [Response]})
+      })
 
-    if(isValid) {
-      Response.setColor("GREEN")
-      Response.setDescription(TRANSLATION_LICENCE.successNewMessage())
-    } else {
-      Response.setColor("RED")
-      Response.setDescription(TRANSLATION_LICENCE.failureClub())
-      console.log(d, 'echec licence', member.user.username, Licence)
-    }
-    interaction.editReply({embeds: [Response]})
   }
 }
