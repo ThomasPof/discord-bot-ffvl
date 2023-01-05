@@ -59,6 +59,7 @@ module.exports = {
       if(licencesList.includes(Licence)) {
         member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+year))
         isValid = true;
+        console.log(`${member.user.username } : ${Licence} trouvée dans la liste ${year}`);
       }
     }
 
@@ -74,7 +75,7 @@ module.exports = {
           member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+currentYear))
           // on envoi le message
           // Si nouveau membre, message de bienvenue
-          console.log(`${member.user.username } : nouvelle licence ${Licence} validée pour ${currentYear}`);
+          console.log(`${member.user.username } : ${Licence} trouvée à la FFVL`);
         }
       })
       .then((response) => {
@@ -82,6 +83,7 @@ module.exports = {
           member.roles.add(mainRole)
           member.roles.remove(newMemberRole)
           Response.setColor("GREEN")
+          console.log(`${member.user.username } : nouvelle licence ${Licence} validée`);
           Response.setDescription(TRANSLATION_LICENCE.successNewMessage())
         } else {
           Response.setColor("RED")
