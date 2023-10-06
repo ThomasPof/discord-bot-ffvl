@@ -27,13 +27,15 @@ module.exports = {
     Response.setDescription(TRANSLATION_LICENCE_CLEAN.successMessage())
     let i = 0;
     guild.members.cache.forEach((member) => {
-      if(!member.roles.cache.some(role => role.name == 'Licencié '+currentYear) ||
-         !member.roles.cache.some(role => role.name == 'Licencié '+(currentYear - 1))
+      if(!member.roles.cache.some(role => role.name == 'Licencié '+currentYear) &&
+         !member.roles.cache.some(role => role.name == 'Licencié '+(currentYear - 1)) &&
+         member.roles.cache.some(role => role.id == mainRoleId)
         ) {
         i++
-        member.roles.remove(mainRole)
+        // member.roles.remove(mainRole)
       }
     })
+    console.log(currentYear - 1)
     console.log('On retire le rôle à',i,'membres.');
 
     interaction.reply({embeds: [Response], ephemeral: true})
