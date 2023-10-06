@@ -29,8 +29,23 @@ module.exports = {
 
     const Response = new MessageEmbed()
 
+    const d = new Date();
+    let currentYear = d.getFullYear();
+    if(d.getMonth() >= 9) { // 9 = octobre
+      currentYear = currentYear + 1;
+    }
+    let isValid = false;
+
     // On vérifie que le rôle pour l'année en cours existe
-    for(const [year] of Object.entries(licences)) {
+    let years = Object.keys(licences)
+    console.log(years, currentYear);
+    if(!years.includes(currentYear)) {
+      years.push(currentYear.toString())
+    }
+
+    console.log(years);
+    years.forEach(year => {
+      console.log(year)
       if(!guild.roles.cache.find(role => role.name == 'Licencié '+year)) {
         guild.roles.create({
           name: 'Licencié '+year,
@@ -38,7 +53,7 @@ module.exports = {
           reason: 'Licenciés '+year,
         })
       }
-    }
+    })
 
 
     // const pastYearlyRole = guild.roles.cache.find(role => role.name == 'Licencié '+(year - 1))
@@ -50,9 +65,6 @@ module.exports = {
     // console.log('on check la licence : ', licences.includes(Licence));
 
     // si le membre a déjà sa licence valide pour l'année,
-    const d = new Date();
-    const currentYear = d.getFullYear();
-    let isValid = false;
 
     // On check dans la liste si on le trouve
     for(const [year, licencesList] of Object.entries(licences)) {
