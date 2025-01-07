@@ -1,6 +1,5 @@
 config.json
 translation/messages.js
 node_modules/
-config.filles.json
-config.zeleph.json
+config.*.json
 !config.example.json
