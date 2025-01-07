@@ -35,7 +35,6 @@ module.exports = async (client) => {
 
   client.on('ready', async () => {
     const MainGuild = await client.guilds.cache.get(serverId)
-
     MainGuild.commands.set(CommandsArray)
   })
 }
