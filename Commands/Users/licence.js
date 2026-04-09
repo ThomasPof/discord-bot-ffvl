@@ -80,7 +80,7 @@ module.exports = {
       .then((response) => {
         console.log('réponse FFVL', response);
         //si on trouve la licence dans la liste
-        if(response == 1) {
+        if(response == 1 || response == 2) {
           // https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
           isValid = true;
           // On ajoute le rôle de cette année
