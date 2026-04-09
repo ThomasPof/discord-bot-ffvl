@@ -1,6 +1,8 @@
 module.exports = {
   name: "delete_from_category",
   description: "Supprime tous les salons d'une catégorie",
+  deferred: true,
+  ephemeral: true,
   options: [
     {
       name: "category",
@@ -10,7 +12,9 @@ module.exports = {
     }
   ],
   async execute(interaction) {
-    if(!interaction.member.permissions.has("ADMINISTRATOR")) return;
+    if(!interaction.member.permissions.has("ADMINISTRATOR")) {
+      return interaction.editReply({ content: "Commande réservée aux administrateurs." });
+    }
 
     const categoryName = interaction.options.getString('category');
     const guild = interaction.guild;
@@ -20,7 +24,7 @@ module.exports = {
     );
 
     if (!category) {
-      return interaction.reply({ content: `Catégorie "${categoryName}" introuvable.`, ephemeral: true });
+      return interaction.editReply({ content: `Catégorie "${categoryName}" introuvable.` });
     }
 
     const channels = guild.channels.cache
@@ -37,6 +41,6 @@ module.exports = {
       }
     }
 
-    console.log(`✅ ${deleted} salon(s) supprimé(s) de la catégorie "${categoryName}".`);
+    return interaction.editReply({ content: `✅ ${deleted} salon(s) supprimé(s) de la catégorie "${categoryName}".` });
   },
 };
