@@ -1,5 +1,6 @@
 const { mainRoleId, newMemberRoleId, structureId, licences } = require('../../config.json')
 const { TRANSLATION_LICENCE } = require('../../translation/messages.js')
+const usedLicences = require('../../data/usedLicences')
 
 const fetch = require('node-fetch');
 
@@ -24,6 +25,7 @@ module.exports = {
    */
   execute(interaction, client) {
     const { guild, options } = interaction;
+    const userId = interaction.user.id;
 
     const Licence = options.getString('licence').toUpperCase();
 
@@ -36,16 +38,13 @@ module.exports = {
     }
     let isValid = false;
 
-    // On vérifie que le rôle pour l'année en cours existe
+    // On s'assure que le rôle pour chaque année connue existe
     let years = Object.keys(licences)
-    console.log(years, currentYear);
-    if(!years.includes(currentYear)) {
+    if(!years.includes(currentYear.toString())) {
       years.push(currentYear.toString())
     }
 
-    console.log(years);
     years.forEach(year => {
-      console.log(year)
       if(!guild.roles.cache.find(role => role.name == 'Licencié '+year)) {
         guild.roles.create({
           name: 'Licencié '+year,
@@ -55,48 +54,55 @@ module.exports = {
       }
     })
 
-
-    // const pastYearlyRole = guild.roles.cache.find(role => role.name == 'Licencié '+(year - 1))
-
     const mainRole = guild.roles.cache.find(role => role.id == mainRoleId)
     const newMemberRole = guild.roles.cache.find(role => role.id == newMemberRoleId)
-    const member = guild.members.cache.find(member => member.id == interaction.user.id)
+    const member = guild.members.cache.find(member => member.id == userId)
 
-    // console.log('on check la licence : ', licences.includes(Licence));
-
-    // si le membre a déjà sa licence valide pour l'année,
-
-    // On check dans la liste si on le trouve
+    // Vérification dans la liste pré-chargée (config.json)
     for(const [year, licencesList] of Object.entries(licences)) {
       if(licencesList.includes(Licence)) {
+        const owner = usedLicences.getOwner(year, Licence)
+        if(owner && owner !== userId) {
+          // La licence a déjà été réclamée par quelqu'un d'autre
+          Response.setColor("RED")
+          Response.setDescription(TRANSLATION_LICENCE.failureAlreadyClaimed())
+          console.log(`Tentative de réutilisation de la licence ${Licence} (année ${year}) par ${member.user.username}, déjà utilisée par ${owner}`)
+          return interaction.editReply({embeds: [Response]})
+        }
+        usedLicences.claim(year, Licence, userId)
         member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+year))
         isValid = true;
-        console.log(`${member.user.username } : ${Licence} trouvée dans la liste ${year}`);
+        console.log(`${member.user.username} : ${Licence} trouvée dans la liste ${year}`)
       }
+    }
+
+    // Vérification anticipée pour l'année en cours avant l'appel API
+    const currentOwner = usedLicences.getOwner(currentYear, Licence)
+    if(currentOwner && currentOwner !== userId) {
+      Response.setColor("RED")
+      Response.setDescription(TRANSLATION_LICENCE.failureAlreadyClaimed())
+      console.log(`Tentative de réutilisation de la licence ${Licence} (année ${currentYear}) par ${member.user.username}, déjà utilisée par ${currentOwner}`)
+      return interaction.editReply({embeds: [Response]})
     }
 
     fetch(`https://data.ffvl.fr/php/verif_lic_adh.php?num=${Licence}&stru=${structureId}`)
       .then(response => response.json())
       .then((response) => {
         console.log('réponse FFVL', response);
-        //si on trouve la licence dans la liste
         if(response == 1 || response == 2) {
-          // https://data.ffvl.fr/php/verif_lic2.php?num=1205453Z&stru=03359
           isValid = true;
-          // On ajoute le rôle de cette année
+          usedLicences.claim(currentYear, Licence, userId)
           member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+currentYear))
-          // on envoi le message
-          // Si nouveau membre, message de bienvenue
-          console.log(`${member.user.username } : ${Licence} trouvée à la FFVL`);
+          console.log(`${member.user.username} : ${Licence} trouvée à la FFVL pour ${currentYear}`)
         }
       })
-      .then((response) => {
+      .then(() => {
         if(isValid) {
           member.roles.add(mainRole)
           member.roles.remove(newMemberRole)
           Response.setColor("GREEN")
-          console.log(`${member.user.username } : nouvelle licence ${Licence} validée`);
           Response.setDescription(TRANSLATION_LICENCE.successNewMessage())
+          console.log(`${member.user.username} : nouvelle licence ${Licence} validée`)
         } else {
           Response.setColor("RED")
           Response.setDescription(TRANSLATION_LICENCE.failureClub())
@@ -104,6 +110,5 @@ module.exports = {
         }
         interaction.editReply({embeds: [Response]})
       })
-
   }
 }

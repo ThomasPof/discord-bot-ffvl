@@ -3,3 +3,4 @@ translation/messages.js
 node_modules/
 config.*.json
 !config.example.json
+data/usedLicences.json
