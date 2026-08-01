@@ -11,6 +11,8 @@ module.exports = {
   description: TRANSLATION_LICENCE.description(),
   deferred: true,
   ephemeral: true,
+  cooldown: 5,          // minutes
+  cooldownScope: 'user',
   options: [
     {
       name: "licence",

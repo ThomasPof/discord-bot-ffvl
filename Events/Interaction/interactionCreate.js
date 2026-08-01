@@ -31,21 +31,31 @@ module.exports= {
       const time_stamps = cooldowns.get(command.name)
       const cooldown_amount = (command.cooldown) * 1000 * 60;
 
-      if(time_stamps.has(interaction.channelId)) {
-        const expiration_time = time_stamps.get(interaction.channelId) + cooldown_amount;
+      // 'user' pour bloquer par membre, 'channel' (défaut) pour bloquer par salon
+      const cooldownKey = command.cooldownScope === 'user'
+        ? interaction.user.id
+        : interaction.channelId;
+
+      if(time_stamps.has(cooldownKey)) {
+        const expiration_time = time_stamps.get(cooldownKey) + cooldown_amount;
         if(current_time < expiration_time) {
           const time_left = (expiration_time - current_time) / 1000 / 60
           const Response = new MessageEmbed()
           Response.setColor("RED")
-          Response.setTitle("Doucement avec la webcam !")
-          Response.setDescription(`L'affichage de la webcam s'est fait il y a moins de ${command.cooldown} minutes. Merci de patienter encore ${Math.round(time_left)} minutes avant la réutiliser.`)
+          if(command.cooldownScope === 'user') {
+            Response.setTitle("Doucement !")
+            Response.setDescription(`Tu as déjà utilisé cette commande récemment. Merci de patienter encore ${Math.ceil(time_left)} minute(s).`)
+          } else {
+            Response.setTitle("Doucement avec la webcam !")
+            Response.setDescription(`L'affichage de la webcam s'est fait il y a moins de ${command.cooldown} minutes. Merci de patienter encore ${Math.round(time_left)} minutes avant la réutiliser.`)
+          }
           return interaction.reply({ embeds:[Response], ephemeral: true })
         }
       }
 
-      time_stamps.set(interaction.channelId, current_time)
+      time_stamps.set(cooldownKey, current_time)
 
-      setTimeout(() => time_stamps.delete(interaction.channelId), cooldown_amount)
+      setTimeout(() => time_stamps.delete(cooldownKey), cooldown_amount)
       if(command.deferred) {
         await interaction.deferReply({ephemeral: command.ephemeral});
       }
