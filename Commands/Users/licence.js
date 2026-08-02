@@ -27,7 +27,7 @@ module.exports = {
    */
   execute(interaction, client) {
     const { guild, options } = interaction;
-    const userId = interaction.user.id;
+    const username = interaction.member.displayName;
 
     const Licence = options.getString('licence').toUpperCase();
 
@@ -58,32 +58,31 @@ module.exports = {
 
     const mainRole = guild.roles.cache.find(role => role.id == mainRoleId)
     const newMemberRole = guild.roles.cache.find(role => role.id == newMemberRoleId)
-    const member = guild.members.cache.find(member => member.id == userId)
+    const member = guild.members.cache.find(member => member.id == interaction.user.id)
 
     // Vérification dans la liste pré-chargée (config.json)
     for(const [year, licencesList] of Object.entries(licences)) {
       if(licencesList.includes(Licence)) {
         const owner = usedLicences.getOwner(year, Licence)
-        if(owner && owner !== userId) {
-          // La licence a déjà été réclamée par quelqu'un d'autre
+        if(owner) {
           Response.setColor("RED")
-          Response.setDescription(TRANSLATION_LICENCE.failureAlreadyClaimed())
-          console.log(`Tentative de réutilisation de la licence ${Licence} (année ${year}) par ${member.user.username}, déjà utilisée par ${owner}`)
+          Response.setDescription(TRANSLATION_LICENCE.failureAlreadyClaimed(owner))
+          console.log(`Tentative de réutilisation de la licence ${Licence} (année ${year}) par ${username}, déjà utilisée par ${owner}`)
           return interaction.editReply({embeds: [Response]})
         }
-        usedLicences.claim(year, Licence, userId)
+        usedLicences.claim(year, Licence, username)
         member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+year))
         isValid = true;
-        console.log(`${member.user.username} : ${Licence} trouvée dans la liste ${year}`)
+        console.log(`${username} : ${Licence} trouvée dans la liste ${year}`)
       }
     }
 
-    // Vérification anticipée pour l'année en cours avant l'appel API
+    // Vérification avant l'appel API
     const currentOwner = usedLicences.getOwner(currentYear, Licence)
-    if(currentOwner && currentOwner !== userId) {
+    if(currentOwner) {
       Response.setColor("RED")
-      Response.setDescription(TRANSLATION_LICENCE.failureAlreadyClaimed())
-      console.log(`Tentative de réutilisation de la licence ${Licence} (année ${currentYear}) par ${member.user.username}, déjà utilisée par ${currentOwner}`)
+      Response.setDescription(TRANSLATION_LICENCE.failureAlreadyClaimed(currentOwner))
+      console.log(`Tentative de réutilisation de la licence ${Licence} (année ${currentYear}) par ${username}, déjà utilisée par ${currentOwner}`)
       return interaction.editReply({embeds: [Response]})
     }
 
@@ -93,9 +92,9 @@ module.exports = {
         console.log('réponse FFVL', response);
         if(response == 1 || response == 2) {
           isValid = true;
-          usedLicences.claim(currentYear, Licence, userId)
+          usedLicences.claim(currentYear, Licence, username)
           member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+currentYear))
-          console.log(`${member.user.username} : ${Licence} trouvée à la FFVL pour ${currentYear}`)
+          console.log(`${username} : ${Licence} trouvée à la FFVL pour ${currentYear}`)
         }
       })
       .then(() => {
@@ -104,11 +103,11 @@ module.exports = {
           member.roles.remove(newMemberRole)
           Response.setColor("GREEN")
           Response.setDescription(TRANSLATION_LICENCE.successNewMessage())
-          console.log(`${member.user.username} : nouvelle licence ${Licence} validée`)
+          console.log(`${username} : nouvelle licence ${Licence} validée`)
         } else {
           Response.setColor("RED")
           Response.setDescription(TRANSLATION_LICENCE.failureClub())
-          console.log(d, 'echec licence', member.user.username, Licence)
+          console.log(d, 'echec licence', username, Licence)
         }
         interaction.editReply({embeds: [Response]})
       })

@@ -34,8 +34,8 @@ module.exports.TRANSLATION_LICENCE = {
 
       Rapproche toi rapidement d'un des membres du comité pour régler ça et ne pas perdre tes accès aux salons Discord.
     `,
-  failureAlreadyClaimed: () =>
-    `🚫 Cette licence a déjà été utilisée par un autre membre cette année.
+  failureAlreadyClaimed: (owner) =>
+    `🚫 Cette licence a déjà été utilisée par **${owner}** cette année.
 
     Si tu penses qu'il s'agit d'une erreur, rapproche toi d'un membre du comité.
     `,

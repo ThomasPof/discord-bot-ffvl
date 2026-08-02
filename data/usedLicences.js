@@ -17,7 +17,7 @@ function save(data) {
 }
 
 /**
- * Retourne l'ID Discord du membre ayant déjà réclamé cette licence pour cette année,
+ * Retourne le pseudo du membre ayant déjà réclamé cette licence pour cette année,
  * ou null si personne ne l'a encore utilisée.
  * @param {string} year
  * @param {string} licence
@@ -32,12 +32,12 @@ function getOwner(year, licence) {
  * Enregistre la licence comme utilisée par ce membre pour cette année.
  * @param {string} year
  * @param {string} licence
- * @param {string} userId
+ * @param {string} username
  */
-function claim(year, licence, userId) {
+function claim(year, licence, username) {
   const data = load()
   if (!data[String(year)]) data[String(year)] = {}
-  data[String(year)][licence] = userId
+  data[String(year)][licence] = username
   save(data)
 }
 
