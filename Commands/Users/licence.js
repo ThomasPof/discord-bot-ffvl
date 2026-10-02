@@ -25,7 +25,7 @@ module.exports = {
    *
    * @param {CommandInteraction} interaction
    */
-  execute(interaction, client) {
+  async execute(interaction, client) {
     const { guild, options } = interaction;
     const username = interaction.member.displayName;
 
@@ -46,15 +46,15 @@ module.exports = {
       years.push(currentYear.toString())
     }
 
-    years.forEach(year => {
-      if(!guild.roles.cache.find(role => role.name == 'Licencié '+year)) {
-        guild.roles.create({
+    const yearRoles = {}
+    for(const year of years) {
+      yearRoles[year] = guild.roles.cache.find(role => role.name == 'Licencié '+year)
+        || await guild.roles.create({
           name: 'Licencié '+year,
           color: 'BLUE',
           reason: 'Licenciés '+year,
         })
-      }
-    })
+    }
 
     const mainRole = guild.roles.cache.find(role => role.id == mainRoleId)
     const newMemberRole = guild.roles.cache.find(role => role.id == newMemberRoleId)
@@ -71,7 +71,7 @@ module.exports = {
           return interaction.editReply({embeds: [Response]})
         }
         usedLicences.claim(year, Licence, username)
-        member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+year))
+        member.roles.add(yearRoles[year])
         isValid = true;
         console.log(`${username} : ${Licence} trouvée dans la liste ${year}`)
       }
@@ -93,7 +93,7 @@ module.exports = {
         if(response == 1 || response == 2) {
           isValid = true;
           usedLicences.claim(currentYear, Licence, username)
-          member.roles.add(guild.roles.cache.find(role => role.name == 'Licencié '+currentYear))
+          member.roles.add(yearRoles[currentYear])
           console.log(`${username} : ${Licence} trouvée à la FFVL pour ${currentYear}`)
         }
       })
@@ -110,6 +110,12 @@ module.exports = {
           console.log(d, 'echec licence', username, Licence)
         }
         interaction.editReply({embeds: [Response]})
+      })
+      .catch(error => {
+        console.error(`Erreur licence ${Licence} (${username})`, error)
+        Response.setColor("RED")
+        Response.setDescription(TRANSLATION_LICENCE.failureClub())
+        interaction.editReply({embeds: [Response]}).catch(console.error)
       })
   }
 }
