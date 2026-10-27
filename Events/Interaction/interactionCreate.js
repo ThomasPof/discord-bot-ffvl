@@ -57,9 +57,18 @@ module.exports= {
 
       setTimeout(() => time_stamps.delete(cooldownKey), cooldown_amount)
       if(command.deferred) {
-        await interaction.deferReply({ephemeral: command.ephemeral});
+        try {
+          await interaction.deferReply({ephemeral: command.ephemeral});
+        } catch(error) {
+          // 10062 : l'interaction a expiré (>3s) avant l'accusé de réception, rien à répondre
+          console.error(`deferReply impossible pour /${command.name} (${interaction.user.tag})`, error.code || error)
+          time_stamps.delete(cooldownKey)
+          return
+        }
       }
-      command.execute(interaction, client)
+      Promise.resolve(command.execute(interaction, client)).catch(error => {
+        console.error(`Erreur dans la commande /${command.name}`, error)
+      })
     }
   }
 }
