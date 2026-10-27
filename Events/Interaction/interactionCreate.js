@@ -69,12 +69,15 @@ module.exports= {
           await interaction.deferReply({ephemeral: command.ephemeral});
         } catch(error) {
           // 10062 : l'interaction a expiré (>3s) avant l'accusé de réception, rien à répondre
-          console.error(`deferReply impossible pour /${command.name} (${interaction.user.tag})`, error.code || error)
+          console.error(`deferReply impossible pour /${command.name} (${interaction.user.tag}) code=${error.code || error} age=${Date.now() - interaction.createdTimestamp}ms ping=${client.ws.ping}ms host=${require('os').hostname()} pid=${process.pid} interaction=${interaction.id}`)
           time_stamps.delete(cooldownKey)
           return
         }
       }
-      Promise.resolve(command.execute(interaction, client)).catch(error => {
+      Promise.resolve(command.execute(interaction, client)).then(result => {
+        // une commande qui retourne false n'a rien consommé : on libère le cooldown
+        if(result === false) time_stamps.delete(cooldownKey)
+      }).catch(error => {
         console.error(`Erreur dans la commande /${command.name}`, error)
       })
     }

@@ -29,9 +29,18 @@ module.exports = {
     const { guild, options } = interaction;
     const username = interaction.member.displayName;
 
-    const Licence = options.getString('licence').toUpperCase();
+    const Licence = options.getString('licence').trim().toUpperCase();
 
     const Response = new MessageEmbed()
+
+    // Format attendu : 7 chiffres suivis d'une lettre (ex : 1234567A)
+    if(!/^\d{7}[A-Z]$/.test(Licence)) {
+      Response.setColor("RED")
+      Response.setDescription("Le numéro de licence doit être au format 1234567A : 7 chiffres suivis d'une lettre.")
+      console.log(`${username} : format de licence invalide "${Licence}"`)
+      await interaction.editReply({embeds: [Response]})
+      return false
+    }
 
     const d = new Date();
     let currentYear = d.getFullYear();
