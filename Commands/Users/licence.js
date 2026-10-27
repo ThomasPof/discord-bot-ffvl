@@ -48,6 +48,7 @@ module.exports = {
       currentYear = currentYear + 1;
     }
     let isValid = false;
+    let validatedYear = 0;
 
     // On s'assure que le rôle pour chaque année connue existe
     let years = Object.keys(licences)
@@ -82,6 +83,7 @@ module.exports = {
         usedLicences.claim(year, Licence, username)
         member.roles.add(yearRoles[year])
         isValid = true;
+        validatedYear = Math.max(validatedYear, Number(year))
         console.log(`${username} : ${Licence} trouvée dans la liste ${year}`)
       }
     }
@@ -101,6 +103,7 @@ module.exports = {
         console.log('réponse FFVL', response);
         if(response == 1 || response == 2) {
           isValid = true;
+          validatedYear = Math.max(validatedYear, currentYear)
           usedLicences.claim(currentYear, Licence, username)
           member.roles.add(yearRoles[currentYear])
           console.log(`${username} : ${Licence} trouvée à la FFVL pour ${currentYear}`)
@@ -111,7 +114,7 @@ module.exports = {
           member.roles.add(mainRole)
           member.roles.remove(newMemberRole)
           Response.setColor("GREEN")
-          Response.setDescription(TRANSLATION_LICENCE.successNewMessage())
+          Response.setDescription(TRANSLATION_LICENCE.successNewMessage(validatedYear))
           console.log(`${username} : nouvelle licence ${Licence} validée`)
         } else {
           Response.setColor("RED")
