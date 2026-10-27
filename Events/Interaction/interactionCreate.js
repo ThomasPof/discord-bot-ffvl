@@ -13,11 +13,14 @@ module.exports= {
     if(interaction.isCommand()) {
 
       const command = client.commands.get(interaction.commandName)
-      if(!command) return interaction.reply({embeds: [
-        new MessageEmbed()
-          .setColor("RED")
-          .setDescription("An error occured while running this command.")
-      ],ephemeral: true}) && client.commands.delete(interaction.commandName)
+      if(!command) {
+        client.commands.delete(interaction.commandName)
+        return interaction.reply({embeds: [
+          new MessageEmbed()
+            .setColor("RED")
+            .setDescription("An error occured while running this command.")
+        ],ephemeral: true}).catch(console.error)
+      }
 
       // console.log(interaction)
       // console.log('INTERACTION : ' + interaction.channelId);
@@ -49,13 +52,18 @@ module.exports= {
             Response.setTitle("Doucement avec la webcam !")
             Response.setDescription(`L'affichage de la webcam s'est fait il y a moins de ${command.cooldown} minutes. Merci de patienter encore ${Math.round(time_left)} minutes avant la réutiliser.`)
           }
-          return interaction.reply({ embeds:[Response], ephemeral: true })
+          return interaction.reply({ embeds:[Response], ephemeral: true }).catch(error => {
+            console.error(`reply cooldown impossible pour /${command.name} (${interaction.user.tag})`, error.code || error)
+          })
         }
       }
 
       time_stamps.set(cooldownKey, current_time)
 
-      setTimeout(() => time_stamps.delete(cooldownKey), cooldown_amount)
+      // ne supprime que si l'entrée n'a pas été renouvelée entre-temps
+      setTimeout(() => {
+        if(time_stamps.get(cooldownKey) === current_time) time_stamps.delete(cooldownKey)
+      }, cooldown_amount)
       if(command.deferred) {
         try {
           await interaction.deferReply({ephemeral: command.ephemeral});
